@@ -18,16 +18,16 @@ class Level:
         else:
             print(f"No spot availalabe in level {self.level_number}")
 
-    def park_vehicle(self,vehicle):
+    def park_vehicle(self,vehicle:str):
             if len(self.spot_taken) == len(self.spots):
                     print(f"All spots are occupied in Level {self.level_number}.")
             while True:
-                allocate_spot = random.randrange(len(self.spots))
+                allocate_spot:int = random.randrange(len(self.spots))
                 if allocate_spot in self.spot_taken:
                     continue
                 else:
                     self.spot_taken.add(allocate_spot)
-                    given_spot_to_vehicle = self.spots[allocate_spot]
+                    given_spot_to_vehicle:str = self.spots[allocate_spot]
                     self.spots_assigned[vehicle] = given_spot_to_vehicle 
                     break
               
