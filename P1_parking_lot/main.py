@@ -19,12 +19,11 @@ class Level:
             print(f"No spot availalabe in level {self.level_number}")
 
     def park_vehicle(self,vehicle):
-            allocate_spot = random.randrange(len(self.spots))
-            while True:
-                if len(self.spot_taken) == len(self.spots):
+            if len(self.spot_taken) == len(self.spots):
                     print(f"All spots are occupied in Level {self.level_number}.")
-                    break
-                elif allocate_spot in self.spot_taken:
+            while True:
+                allocate_spot = random.randrange(len(self.spots))
+                if allocate_spot in self.spot_taken:
                     continue
                 else:
                     self.spot_taken.add(allocate_spot)
@@ -33,5 +32,11 @@ class Level:
                     break
               
     def exit(self):
+        exit_vehicle , spot = random.choice(list(self.spots_assigned.items())) #get random key and value to exit
+        if spot in self.spots:
+            index = self.spots.index(spot)
+            self.spot_taken.remove(index)
+            print(f"Vehicle {exit_vehicle} has been removed.")
         self.spot_available = self.spot_available + 1
         self.spot_occcupied = self.spot_occcupied - 1
+        
