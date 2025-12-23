@@ -15,6 +15,7 @@ class Level:
         if self.spot_available > 0:
             self.spot_available = self.spot_available - 1
             self.spot_occcupied = self.spot_occcupied + 1
+            print("Spot available")
         else:
             print(f"No spot availalabe in level {self.level_number}")
 
@@ -28,7 +29,8 @@ class Level:
                 else:
                     self.spot_taken.add(allocate_spot)
                     given_spot_to_vehicle:str = self.spots[allocate_spot]
-                    self.spots_assigned[vehicle] = given_spot_to_vehicle 
+                    self.spots_assigned[vehicle] = given_spot_to_vehicle
+                    print(f"Vehicle {vehicle} took spot in Level:{self.level_number} [{given_spot_to_vehicle}]") 
                     break
               
     def exit(self):
@@ -39,4 +41,9 @@ class Level:
             print(f"Vehicle {exit_vehicle} has been removed.")
         self.spot_available = self.spot_available + 1
         self.spot_occcupied = self.spot_occcupied - 1
+        
+level1:Level = Level(1, "truck", 5, ['A', 'B', 'C', 'D', 'E'])
+level1.entry()
+level1.park_vehicle("CA4661")
+level1.exit()
         
