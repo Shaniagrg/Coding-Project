@@ -41,4 +41,12 @@ class Lot:
             print("Spot available")
         else:
             print(f"No spot availalabe in level {self.level_number}")
+    
+    def exit(self):
+        exit_vehicle , spot = random.choice(list(self.spots_assigned.items())) #get random key and value to exit
+        if spot in self.spots:
+            index = self.spots.index(spot)
+            self.spot_taken.remove(index)
+            print(f"Vehicle {exit_vehicle} has been removed.")
+        self.spot_occcupied = self.spot_occcupied - 1
    
