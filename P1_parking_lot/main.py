@@ -5,6 +5,12 @@ class lot
 class vehicle
 class lift
 '''
+class Lift:
+    def __init__(self, l_t:str, l:int):
+        self.lift_type = l_t #stairs, elevator, escalator
+        self.levels = l
+        
+        
 class Vehicle:
     def __init__(self, v_s:list[str]):
         self.spots:list[str] = v_s
@@ -24,16 +30,13 @@ class Vehicle:
                     break
     
 class Lot:
-    def __init__(self,l:int, t_s:int, vehicle_spot:list[str]):
+    def __init__(self,l:int, t_s:int, vehicle_spot:list[str], lift_type:str):
         self.level_number:int = l
         self.total_spots:int = t_s
         self.spot_occupied:int = 0
         
         self.vehicle = Vehicle(v_s = vehicle_spot)
-        '''
-        self.vehicle = Vehicle()
-        self.lift = Lift()
-        '''
+        self.lift = Lift(l_t=lift_type,l=l)
     
     def entry(self):  
         if self.total_spots > self.spot_occcupied:
