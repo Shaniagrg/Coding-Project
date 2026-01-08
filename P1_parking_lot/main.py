@@ -5,6 +5,7 @@ class lot
 class vehicle
 class lift
 '''
+
 class Lift:
     def __init__(self, l_t:str, l:int):
         self.lift_type = l_t #stairs, elevator, escalator
@@ -12,22 +13,13 @@ class Lift:
         
         
 class Vehicle:
-    def __init__(self, v_s:list[str]):
-        self.spots:list[str] = v_s
-        self.spot_taken:set[int] = set()
-        self.spots_assigned:dict[str,str] = {} #key is vehicle and value is given_spot_to_vehicle
-    
-    def park_vehicle(self,vehicle:str):
-            while True:
-                allocate_spot:int = random.randrange(len(self.spots))
-                if allocate_spot in self.spot_taken:
-                    continue
-                else:
-                    self.spot_taken.add(allocate_spot)
-                    given_spot_to_vehicle:str = self.spots[allocate_spot]
-                    self.spots_assigned[vehicle] = given_spot_to_vehicle
-                    print(f"Vehicle {vehicle} took spot in Level:{self.level_number} [{given_spot_to_vehicle}]") 
-                    break
+
+    def __init__(self,license:str, v_h:str):
+        self.license = license
+        self.vehicle_type = v_h
+        self.spot_number = 0
+        self.level = 0
+     
     
 class Lot:
     def __init__(self,l:int, t_s:int, vehicle_spot:list[str], lift_type:str):
@@ -44,6 +36,23 @@ class Lot:
             print("Spot available")
         else:
             print(f"No spot availalabe in level {self.level_number}")
+            
+    def __init__(self, v_s:list[str]):
+        self.spots:list[str] = v_s
+        self.spot_taken:set[int] = set()
+        self.spots_assigned:dict[str,str] = {} #key is vehicle and value is given_spot_to_vehicle
+    
+    def park_vehicle(self,vehicle:str):
+            while True:
+                allocate_spot:int = random.randrange(len(self.spots))
+                if allocate_spot in self.spot_taken:
+                    continue
+                else:
+                    self.spot_taken.add(allocate_spot)
+                    given_spot_to_vehicle:str = self.spots[allocate_spot]
+                    self.spots_assigned[vehicle] = given_spot_to_vehicle
+                    print(f"Vehicle {vehicle} took spot in Level:{self.level_number} [{given_spot_to_vehicle}]") 
+                    break
     
     def exit(self):
         exit_vehicle , spot = random.choice(list(self.spots_assigned.items())) #get random key and value to exit
