@@ -6,6 +6,21 @@ class vehicle
 class lift
 '''
 
+class Driver:
+    
+    def __init__(self, license:str):
+        self.license = license
+        
+    def park_vehicle(self, parking_option:list[int]):
+    
+        while True:
+            allocate_spot:int = random.randrange(len(parking_option))
+            if 0 == parking_option[allocate_spot]:
+                continue
+            else:
+                parking_option[allocate_spot] = parking_option[allocate_spot] + 1 
+                break
+        
 class Lift:
     def __init__(self, l_t:str, l:int):
         self.lift_type = l_t #stairs, elevator, escalator
@@ -14,46 +29,33 @@ class Lift:
         
 class Vehicle:
 
-    def __init__(self,license:str, v_h:str):
-        self.license = license
+    def __init__(self, plate_no:str, v_h:str):
+        self.plate_no = plate_no
         self.vehicle_type = v_h
-        self.spot_number = 0
-        self.level = 0
      
     
 class Lot:
-    def __init__(self,l:int, t_s:int, vehicle_spot:list[str], lift_type:str):
-        self.level_number:int = l
+    def __init__(self, l:str, level:int, t_s:int, number:str, vehicle_type:str, lift_type:str, license:str, vehicle_spot:list[str]):
+        self.location:str = l
+        self.levels:int = level
         self.total_spots:int = t_s
         self.spot_occupied:int = 0
         
-        self.vehicle = Vehicle(v_s = vehicle_spot)
-        self.lift = Lift(l_t=lift_type,l=l)
+        
+        self.vehicle = Vehicle(plate_no = number, v_h = vehicle_type)
+        self.lift = Lift(l_t = lift_type, l=l)
+        self.driver = Driver(license = license)
+        self.entry_vehicle = self.entry()
     
     def entry(self):  
         if self.total_spots > self.spot_occcupied:
             self.spot_occcupied = self.spot_occcupied + 1
             print("Spot available")
-        else:
-            print(f"No spot availalabe in level {self.level_number}")
+            self.driver.park_vehicle()
             
-    def __init__(self, v_s:list[str]):
-        self.spots:list[str] = v_s
-        self.spot_taken:set[int] = set()
-        self.spots_assigned:dict[str,str] = {} #key is vehicle and value is given_spot_to_vehicle
-    
-    def park_vehicle(self,vehicle:str):
-            while True:
-                allocate_spot:int = random.randrange(len(self.spots))
-                if allocate_spot in self.spot_taken:
-                    continue
-                else:
-                    self.spot_taken.add(allocate_spot)
-                    given_spot_to_vehicle:str = self.spots[allocate_spot]
-                    self.spots_assigned[vehicle] = given_spot_to_vehicle
-                    print(f"Vehicle {vehicle} took spot in Level:{self.level_number} [{given_spot_to_vehicle}]") 
-                    break
-    
+        else:
+            print("No spot availalabe.")
+
     def exit(self):
         exit_vehicle , spot = random.choice(list(self.spots_assigned.items())) #get random key and value to exit
         if spot in self.spots:
