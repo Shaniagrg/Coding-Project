@@ -70,4 +70,7 @@ class Lot:
             self.spot_taken.remove(index)
             print(f"Vehicle {exit_vehicle} has been removed.")
         self.spot_occcupied = self.spot_occcupied - 1
+        
+        
+        ''''test commit in git '''
    
