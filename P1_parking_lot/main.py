@@ -31,20 +31,20 @@ class Lift:
         
 class Vehicle:
 
-    def __init__(self, plate_no:str, v_h:str):
-        self.plate_no = plate_no
+    def __init__(self, p_n:str, v_h:str):
+        self.plate_no = p_n
         self.vehicle_type = v_h
      
     
 class Lot:
-    def __init__(self, l:str, level:int, t_s:int, number:str, vehicle_type:str, lift_type:str, spots:list[int]):
+    def __init__(self, l:str, level:int, t_s:int, lift_type:str, spots:list[int]):
         self.location:str = l
         self.levels:int = level
         self.total_spots:int = t_s
         self.spot_occupied:int = 0
         self.total_driver:list[Driver] = None
         
-        self.vehicle = Vehicle(plate_no = number, v_h = vehicle_type)
+        self.total_vehicle:list[Vehicle] = None
         self.lift = Lift(l_t = lift_type, l = level)
         
         self.spot_number:list[int] = spots
@@ -63,6 +63,10 @@ class Lot:
         driver:Driver = Driver(name,license)
         self.total_driver.append(driver)
         
+    def store_vehicle(self, plate_no:str, vehicle_type:str):
+        vehicle:Vehicle = Vehicle(p_n=plate_no, v_h=vehicle_type)
+        self.total_vehicle.append(vehicle)
+        
     def exit(self):
         exit_vehicle , spot = random.choice(list(self.spots_assigned.items())) #get random key and value to exit
         if spot in self.spots:
@@ -71,6 +75,5 @@ class Lot:
             print(f"Vehicle {exit_vehicle} has been removed.")
         self.spot_occcupied = self.spot_occcupied - 1
         
-        
-        ''''test commit in git '''
+    
    
