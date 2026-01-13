@@ -6,45 +6,38 @@ class vehicle
 class lift
 '''
 
-class Driver:
+class Driver_vehicle:
     
-    def __init__(self, license:str, n:str):
+    def __init__(self, license:str, n:str, p_n:str):
         self.license:str = license
         self.name:str = n
+        self.plate_no:str = p_n
         
-    def park_vehicle(self, total_driver:list[str], parking_option:list[int]):
         
+    def park_vehicle(self, parking_option:list[int]):
         while True:
             allocate_spot:int = random.randrange(len(parking_option))
-            for i in range (len(total_driver)):
-                if 0 == parking_option[allocate_spot]:
-                    continue
-                else:
-                    parking_option[allocate_spot] = parking_option[allocate_spot] + 1 
-                    break
+            if 0 == parking_option[allocate_spot]:
+                continue
+            else:
+                parking_option[allocate_spot] = parking_option[allocate_spot] + 1 
+                break
         
 class Lift:
     def __init__(self, l_t:str, l:int):
         self.lift_type = l_t #stairs, elevator, escalator
         self.levels = l
         
-        
-class Vehicle:
-
-    def __init__(self, p_n:str, v_h:str):
-        self.plate_no = p_n
-        self.vehicle_type = v_h
-     
-    
+           
 class Lot:
-    def __init__(self, l:str, level:int, t_s:int, lift_type:str, spots:list[int]):
+    def __init__(self, l:str, vehicle:str, level:int, t_s:int, lift_type:str, spots:list[int]):
         self.location:str = l
+        self.vehicle = vehicle
         self.levels:int = level
         self.total_spots:int = t_s
         self.spot_occupied:int = 0
-        self.total_driver:list[Driver] = None
+        self.total_driver:list[Driver_vehicle] = None
         
-        self.total_vehicle:list[Vehicle] = None
         self.lift = Lift(l_t = lift_type, l = level)
         
         self.spot_number:list[int] = spots
@@ -54,26 +47,19 @@ class Lot:
         if self.total_spots > self.spot_occcupied:
             self.spot_occcupied = self.spot_occcupied + 1
             print("Spot available")
-            self.driver.park_vehicle(self.spot_number, self.total_driver)
             
         else:
             print("No spot availalabe.")
 
-    def store_driver(self, name:str, license:str):
-        driver:Driver = Driver(name,license)
+    def store_driver(self, name:str, license:str, plate_no:str):
+        driver:Driver_vehicle = Driver_vehicle(license=license, n=name, p_n=plate_no)
         self.total_driver.append(driver)
+        driver.park_vehicle(self.spot_number)
         
-    def store_vehicle(self, plate_no:str, vehicle_type:str):
-        vehicle:Vehicle = Vehicle(p_n=plate_no, v_h=vehicle_type)
-        self.total_vehicle.append(vehicle)
+    
         
-    def exit(self):
-        exit_vehicle , spot = random.choice(list(self.spots_assigned.items())) #get random key and value to exit
-        if spot in self.spots:
-            index = self.spots.index(spot)
-            self.spot_taken.remove(index)
-            print(f"Vehicle {exit_vehicle} has been removed.")
-        self.spot_occcupied = self.spot_occcupied - 1
-        
+'''
+lot --> entry --> store_driver --> store_vehicle
+'''        
     
    
